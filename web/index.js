@@ -6,6 +6,12 @@ var mongoose = require('mongoose'); //mongodb connector
 var bodyParser = require('body-parser'); //http : post data paser(body)
 var methodOverride = require('method-override'); // override delete method
 
+var jquery = require('jquery');
+
+var jsdom = require('jsdom');
+// var window = jsdom.jsdom().createWindow();
+// var $ = require('jquery')(window);
+
 //db connection
 mongoose.connect("mongodb://test:test@ds021462.mlab.com:21462/smart01");
 var db = mongoose.connection;
@@ -40,12 +46,22 @@ app.use(bodyParser.json()); //recive
 app.use(bodyParser.urlencoded({extended:true})); //send
 app.use(methodOverride("_method")); // delete sign override
 
-/*
-//root route
-app.get('/', function(req, res){
-  res.render('index');
+//rout setting
+app.get('/posts/setting', function(req, res){
+  Post.find({}).sort('-createdAt').exec(function(err, posts){
+    if(err) return res.json({success:false, message:err});
+    res.render('posts/setting', {data:posts});
+  });
 });
-*/
+
+app.put('/posts/setting/:id', function(req, res){
+    req.body.post.updatedAt=Date.now();
+    Post.findByIdAndUpdate(req.params.id, req.body.post, function(err, post){
+      if(err) return res.json({success:false, message:err});
+      res.redirect('/posts/setting');
+    });
+  }); //update
+
 
 //set route
 app.get('/posts', function(req, res){

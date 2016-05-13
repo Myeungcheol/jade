@@ -1,0 +1,69 @@
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script type="text/javascript">
+ $(document).on('click', '.toggle-button', function() {
+    $(this).toggleClass('toggle-button-selected');
+});
+
+function check(){
+
+}
+</script>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+    <link rel="stylesheet" href="/stylesheets/table.css">
+    <link rel="stylesheet" href="/stylesheets/body.css">
+    <link rel="stylesheet" href="/stylesheets/toggle.css">
+  </head>
+  <body>
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <div class="posts">
+      <h2> APP SETTING </h2>
+      <!-- main start -->
+
+      <table class="style">
+        <thead>
+          <th>KIND</th>
+          <th>TITLE</th>
+          <th>BODY</th>
+          <th>SUBMIT</th>
+        </thead>
+        <tbody>
+        <% data.forEach(function(e){ %>
+          <form class="posts_form" action="/posts/setting/<%=e._id%>?_method=put" method="post">
+          <tr>
+            <th>
+              <a href="/posts/<%=e._id %>"> <%=e._id%></a>
+            </th>
+            <td>
+              <input type="text" name="post[title]" value="<%= e.title %>"></input>
+            </td>
+            <td>
+              <input type="text" name="post[body]" value="<%= e.body%>"></input>
+            </td>
+            <td>
+              <div class="toggle-button">
+                <button type="sumbit"></button>
+              </div>
+              <!-- <button type="submit">Sumbit</button> -->
+            </td>
+          </tr>
+          </form>
+        <% }) %>
+        </tbody>
+      </table>
+      <br>
+      <a href="/posts"><button>Back</button>
+    </div>
+      <!-- main end -->
+    </div> <!-- posts end -->
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
+  </body>
+</html>
