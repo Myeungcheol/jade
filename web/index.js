@@ -2,6 +2,17 @@
 var express = require('express');
 var path = require('path');
 var app = express();
+var mongoose = require('mongoose');
+
+mongoose.connect("mongodb://test:test@ds021462.mlab.com:21462/smart01");
+var db = mongoose.connection;
+db.once("open", function() {
+  console.log("DB connected !");
+});
+
+db.on("error", function(){
+  console.log("DB ERROR:", err);
+});
 
 app.set("view engine", 'ejs');
 //app.use(express.static(__dirname + '/public'));
