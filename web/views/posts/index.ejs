@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+    <link rel="stylesheet" href="/stylesheets/table.css">
+    <link rel="stylesheet" href="/stylesheets/body.css">
+  </head>
+  <body>
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <div class="center">
+    <div class="posts">
+      <% include partials/top%>
+      <!-- main start -->
+        <!-- views/posts/index.ejs -->
+        <div class="index">
+          <!-- list table -->
+          <table class="style">
+            <thead>
+              <th>TITLE</th>
+              <th>CREATE DATE</th>
+            </thead>
+            <tbody>
+            <% data.forEach(function(e){ %>
+              <tr>
+                <th>
+                  <a href="/posts/<%=e._id %>"> <%= e.title %></a>
+                </th>
+                <td>
+                  <%= e.createdAt.toLocaleDateString() %>
+                </td>
+              </tr>
+            <% }) %>
+            <!-- new button -->
+            <tr>
+              <th>
+              </th>
+              <td align="right">
+                <a href="/posts/new"><button>New</button></a>
+              </td>
+            </tr> <!-- new button end -->
+            </tbody>
+          </table>
+        </div>
+      <!-- </div> -->
+        <!-- main end -->
+    </div> <!-- posts end -->
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
+  </div> <!-- container end -->
+  </body>
+</html>
