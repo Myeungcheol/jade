@@ -3,11 +3,20 @@
 <script type="text/javascript">
  $(document).on('click', '.toggle-button', function() {
     $(this).toggleClass('toggle-button-selected');
+    alert("click : " + $(this).children("input").val());
 });
 
-function check(){
-
-}
+ $(document).ready(function(){
+   $('.input_body').each(function(index){
+     var body = Number($(this).text());
+     var idx = index;
+     $('.toggle-button').each(function(i){
+       if(idx == i && body == 1){
+        $(this).addClass('toggle-button-selected');
+      }
+     });
+   });
+});
 </script>
 
 <!DOCTYPE html>
@@ -33,29 +42,37 @@ function check(){
           <th>BODY</th>
           <th>SUBMIT</th>
         </thead>
+
         <tbody>
         <% data.forEach(function(e){ %>
+          <div class="fm">
           <form class="posts_form" action="/posts/setting/<%=e._id%>?_method=put" method="post">
-          <tr>
-            <th>
-              <a href="/posts/<%=e._id %>"> <%=e._id%></a>
-            </th>
-            <td>
-              <input type="text" name="post[title]" value="<%= e.title %>"></input>
-            </td>
-            <td>
-              <input type="text" name="post[body]" value="<%= e.body%>"></input>
-            </td>
-            <td>
-              <div class="toggle-button">
-                <button type="sumbit"></button>
-              </div>
-              <!-- <button type="submit">Sumbit</button> -->
-            </td>
-          </tr>
+              <tr>
+                <th>
+                  <a href="/posts/<%=e._id %>"> <%=e._id%></a>
+                </th>
+                <td>
+                  <input type="text" name="post[title]" value="<%= e.title %>"></input>
+                </td>
+                <td>
+                  <div class="input_body">
+                    <!-- <input type="text" name="post[body]" value="<%= e.body%>"></input> -->
+                    <%=e.body%>
+                  </div>
+                </td>
+                <td>
+                  <div class="toggle-button">
+                    <button id="<%e._id%>_btn" type="sumbit"></button>
+                    <input id="<%e._id%>_val" type="text" name="post[body]" value="<%= e.body%>" style="display:none"></input>
+                  </div>
+                  <!-- <button type="submit">Sumbit</button> -->
+                </td>
+              </tr>
           </form>
+          </div>
         <% }) %>
         </tbody>
+
       </table>
       <br>
       <a href="/posts"><button>Back</button>
