@@ -34,11 +34,12 @@ function getValue(){
     </header>
     <div class="posts">
       <% include partials/top%>
+      <image src="/images/banner_list.png">
       <!-- main start -->
         <!-- views/posts/index.ejs -->
         <div class="index">
           <!-- list table -->
-          <table class="style">
+          <table class="table">
             <thead>
               <th>KIND</th>
               <th>SELECT ITEM</th>
@@ -49,13 +50,13 @@ function getValue(){
                 <th>
                   VIDEO LIST
                 </th>
-                <th>
+                <td>
                   <select id="itemList" name="itemList">
                     <% data.forEach(function(e){ %>
-                      <option value="<%=e._id%>"> <%=e.title%> : <%=e.path%> : <%= e.createdAt.toLocaleDateString() %></option>
+                      <option value="<%=e._id%>"> <%=e.title%> : <%= e.createdAt.toLocaleDateString() %></option>
                     <% }) %>
                   </select>
-                </th>
+                </td>
               </tr>
             <!-- new button -->
             <tr>
