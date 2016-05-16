@@ -15,6 +15,7 @@
     "jquery": "^2.2.3",
     "jsdom": "^9.0.0",
     "method-override": "^2.3.5",
-    "mongoose": "^4.4.16"
+    "mongoose": "^4.4.16",
+    "vid-streamer": "^1.0.0"
   }
 }

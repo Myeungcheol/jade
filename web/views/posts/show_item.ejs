@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body>
+    <div align="center">
+    <header>
+      <link rel="stylesheet" href="/stylesheets/table.css">
+      <% include ../partials/header %>
+    </header>
+    <div class="posts">
+      <% include partials/top%>
+      <!-- main start -->
+      <div class="show">
+        <table class="style">
+            <tbody>
+              <tr>
+                <th>TITLE</th>
+                <td><%= data.title %></td>
+              </tr>
+              <tr>
+                <div class="time">
+                  <th>Create At</th>
+                  <td> <%= data.createdAt.toLocaleDateString() %> <%= data.createdAt.toLocaleTimeString() %> </td>
+                </div>
+              </tr>
+                <% if(data.updatedAt){ %>
+              <tr>
+                <div class="time">
+                  <th>Update At</th>
+                  <td> <%= data.updatedAt.toLocaleDateString() %> <%= data.updatedAt.toLocaleTimeString() %> </td>
+                </div>
+              </tr>
+                <% } %>
+              <tr>
+                <th>DATA</th>
+                <td> <p class="body"><%= data.path %><p> </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table border="0">
+            <tbody align="right">
+              <td>
+                  <a href="/posts/list/<%=data._id%>/edit"><button>Edit</button></a>
+              </td>
+                  <!-- Delete button here -->
+              <td>
+                <div class="tools">
+                  <form class="btn_delete" action="/posts/list/<%=data._id%>?_method=delete" method="post">
+                    <button type="submit">Delete</button>
+                  </form> <!-- Delete button end -->
+                </div>
+              </td>
+              <td>
+                <a href="/posts/list"><button>Back</button><a>
+              </td>
+            </tbody>
+          </table>
+        </div>
+      <!-- main end -->
+    </div> <!-- posts end -->
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
+  </div>
+  </body>
+</html>

@@ -12,6 +12,9 @@ var jsdom = require('jsdom');
 // var window = jsdom.jsdom().createWindow();
 // var $ = require('jquery')(window);
 
+//video controll
+var vidStreamer = require("vid-streamer");
+
 //db connection
 mongoose.connect("mongodb://test:test@ds021462.mlab.com:21462/smart01");
 var db = mongoose.connection;
@@ -36,8 +39,17 @@ var postSchema = mongoose.Schema({
   updatedAt: Date
 });
 
+var itemSchema = mongoose.Schema({
+  title: {type:String, required:true},
+  path: {type:String, required:true},
+  createdAt: {type:Date, default:Date.now},
+  updatedAt: Date
+});
+
+
 //create Model  --> collection name : post // for Schema : postSchema
 var Post = mongoose.model('post', postSchema);
+var Item = mongoose.model('item', itemSchema);
 
 // linking
 app.set("view engine", 'ejs');
@@ -45,6 +57,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json()); //recive
 app.use(bodyParser.urlencoded({extended:true})); //send
 app.use(methodOverride("_method")); // delete sign override
+
+//video paly
+// app.get("/posts/videos/test.avi", vidStreamer);
 
 //rout setting
 app.get('/posts/setting', function(req, res){
@@ -61,7 +76,55 @@ app.put('/posts/setting/:id', function(req, res){
       res.redirect('/posts/setting');
     });
   }); //update
+  //setting - end
 
+  app.get('/posts/item', function(req, res){
+    res.render("posts/item");
+  }); // new
+
+  app.post('/posts/list', function(req, res){
+    Item.create(req.body.item, function(err, item){
+      if(err) return res.json({success:false, message:err});
+      res.redirect('/posts/list');
+    });
+  }); // create
+
+  app.get('/posts/list', function(req, res){
+    Item.find({}).sort('-createdAt').exec(function(err, posts){
+      if(err) return res.json({success:false, message:err});
+      res.render("posts/list", {data:posts});
+    });
+  }); // list
+
+  app.get('/posts/list/:id', function(req, res){
+    Item.findById(req.params.id, function(err, post){
+      if(err) return res.json({success:false, message:err});
+      res.render("posts/show_item", {data:post});
+    });
+  }); // show
+
+  app.get('/posts/list/:id/edit', function(req, res){
+    Item.findById(req.params.id, function(err, post){
+      if(err) return res.json({success:false, message:err});
+      res.render("posts/edit_item", {data:post});
+    });
+  }); // edit
+
+  app.put('/posts/list/:id', function(req, res){
+      req.body.item.updatedAt=Date.now();
+      Item.findByIdAndUpdate(req.params.id, req.body.item, function(err, post){
+        if(err) return res.json({success:false, message:err});
+        res.redirect('/posts/list/'+req.params.id);
+      });
+    }); //update
+
+  app.delete('/posts/list/:id', function(req, res){
+    Item.findByIdAndRemove(req.params.id, function(err, post){
+      if(err) return res.json({success:false, message:err});
+      res.redirect('/posts/list');
+    });
+  });  //delete
+//list -end
 
 //set route
 app.get('/posts', function(req, res){

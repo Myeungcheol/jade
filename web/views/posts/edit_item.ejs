@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/table.css">
+    <% include ../partials/head %>
+  </head>
+  <body>
+    <div align="center">
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <div class="posts">
+      <% include partials/top%>
+      <!-- main start -->
+      <div class="edit">
+      <table class="style">
+        <thead>
+          <tr>
+            <th>Edit Post</th>
+            <th>insert...</th>
+          </tr>
+        </thead>
+        <tbody>
+          <form class="posts_form" action="/posts/list/<%=data._id%>?_method=put" method="post">
+          <tr>
+            <th>TITLE</th>
+            <td><input type="text" name="item[title]" value="<%=data.title%>"></td>
+          </tr>
+          <tr>
+            <th>DATA</th>
+            <td><textarea name="item[path]"><%=data.path%></textarea></td>
+          </tr>
+          <tr>
+            <td><button type="submit">Submit</button></td>
+          </form>
+            <td><a href="/posts/list/<%=data._id%>"><button>Back</button></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <!-- main end -->
+    </div> <!-- posts end -->
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
+  </div>
+  </body>
+</html>

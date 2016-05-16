@@ -4,38 +4,66 @@
     <% include ../partials/head %>
   </head>
   <body>
+    <div align="center">
     <header>
+      <link rel="stylesheet" href="/stylesheets/table.css">
       <% include ../partials/header %>
     </header>
     <div class="posts">
       <% include partials/top%>
       <!-- main start -->
       <div class="show">
-        <h3><%= data.title %></h3>
-        <div class="time">Created at <br>
-          <%= data.createdAt.toLocaleDateString() %> <br>
-          <%= data.createdAt.toLocaleTimeString() %>
-        </div>
-        <% if(data.updatedAt){ %>
-          <div class="time">Update at<br>
-            <%= data.updatedAt.toLocaleDateString() %> <br>
-            <%= data.updatedAt.toLocaleTimeString() %>
-          </div>
-        <% } %>
-        <p class="body"><%= data.body %><p>
-          <div class="tools">
-            <a href="/posts/<%=data._id%>/edit"><button>Edit</button></a>
-            <!-- Delete button here -->
-            <form class="btn_delete" action="/posts/<%=data._id%>?_method=delete" method="post">
-              <button type="submit">Delete</button>
-            </form> <!-- Delete button end -->
-          </div>
-          <a href="/posts"><button>Back</button><a>
+        <table class="style">
+            <tbody>
+              <tr>
+                <th>TITLE</th>
+                <td><%= data.title %></td>
+              </tr>
+              <tr>
+                <div class="time">
+                  <th>Create At</th>
+                  <td> <%= data.createdAt.toLocaleDateString() %> <%= data.createdAt.toLocaleTimeString() %> </td>
+                </div>
+              </tr>
+                <% if(data.updatedAt){ %>
+              <tr>
+                <div class="time">
+                  <th>Update At</th>
+                  <td> <%= data.updatedAt.toLocaleDateString() %> <%= data.updatedAt.toLocaleTimeString() %> </td>
+                </div>
+              </tr>
+                <% } %>
+              <tr>
+                <th>DATA</th>
+                <td> <p class="body"><%= data.body %><p> </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table border="0">
+            <tbody align="right">
+              <td>
+                  <a href="/posts/<%=data._id%>/edit"><button>Edit</button></a>
+              </td>
+                  <!-- Delete button here -->
+              <td>
+                <div class="tools">
+                  <form class="btn_delete" action="/posts/<%=data._id%>?_method=delete" method="post">
+                    <button type="submit">Delete</button>
+                  </form> <!-- Delete button end -->
+                </div>
+              </td>
+              <td>
+                <a href="/posts"><button>Back</button><a>
+              </td>
+            </tbody>
+          </table>
         </div>
       <!-- main end -->
     </div> <!-- posts end -->
     <footer>
       <% include ../partials/footer %>
     </footer>
+  </div>
   </body>
 </html>

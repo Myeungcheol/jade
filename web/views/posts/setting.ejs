@@ -3,7 +3,20 @@
 <script type="text/javascript">
  $(document).on('click', '.toggle-button', function() {
     $(this).toggleClass('toggle-button-selected');
-    alert("click : " + $(this).children("input").val());
+    // alert("click : " + $(this).children("form").children("input").val());
+    var values = Number($(this).children("form").children("input").val());
+    var kind = $(this).children("form").children("input");
+    var fm = $(this).children("form");
+    if(values == 1){
+      kind.val(0);
+      // alert("test 1 : " + kind.val());
+      fm.submit();
+    }else{
+      kind.val(1);
+      // alert("test 2 : " + kind.val());
+      fm.submit();
+    }
+
 });
 
  $(document).ready(function(){
@@ -22,38 +35,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% include ../partials/head %>
     <link rel="stylesheet" href="/stylesheets/table.css">
     <link rel="stylesheet" href="/stylesheets/body.css">
     <link rel="stylesheet" href="/stylesheets/toggle.css">
+    <% include ../partials/head %>
   </head>
   <body>
+    <div align="center">
     <header>
       <% include ../partials/header %>
     </header>
     <div class="posts">
       <h2> APP SETTING </h2>
       <!-- main start -->
-
       <table class="style">
         <thead>
-          <th>KIND</th>
           <th>TITLE</th>
           <th>BODY</th>
           <th>SUBMIT</th>
         </thead>
-
         <tbody>
         <% data.forEach(function(e){ %>
-          <div class="fm">
-          <form class="posts_form" action="/posts/setting/<%=e._id%>?_method=put" method="post">
-              <tr>
+          <tr>
                 <th>
-                  <a href="/posts/<%=e._id %>"> <%=e._id%></a>
+                  <a href="/posts/<%=e._id %>"> <%=e.title%></a>
                 </th>
-                <td>
-                  <input type="text" name="post[title]" value="<%= e.title %>"></input>
-                </td>
                 <td>
                   <div class="input_body">
                     <!-- <input type="text" name="post[body]" value="<%= e.body%>"></input> -->
@@ -63,24 +69,24 @@
                 <td>
                   <div class="toggle-button">
                     <button id="<%e._id%>_btn" type="sumbit"></button>
-                    <input id="<%e._id%>_val" type="text" name="post[body]" value="<%= e.body%>" style="display:none"></input>
+                    <form action="/posts/setting/<%=e._id%>?_method=put" method="post" style="display:none">
+                      <input id="<%e._id%>_val" type="text" name="post[body]" value="<%= e.body%>"></input>
+                    </form>
                   </div>
                   <!-- <button type="submit">Sumbit</button> -->
                 </td>
               </tr>
-          </form>
-          </div>
         <% }) %>
         </tbody>
-
       </table>
       <br>
       <a href="/posts"><button>Back</button>
-    </div>
       <!-- main end -->
     </div> <!-- posts end -->
+
     <footer>
       <% include ../partials/footer %>
     </footer>
+    </div>
   </body>
 </html>

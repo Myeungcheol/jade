@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="/stylesheets/table.css">
     <% include ../partials/head %>
   </head>
   <body>
+    <div align="center">
     <header>
       <% include ../partials/header %>
     </header>
@@ -11,20 +13,36 @@
       <% include partials/top%>
       <!-- main start -->
       <div class="edit">
-        <h3>Edit Post</h3>
-        <form class="posts_form" action="/posts/<%=data._id%>?_method=put" method="post">
-          <label>Title</label>
-          <input type="text" name="post[title]" value="<%=data.title%>">
-          <label>Body</label>
-          <textarea name="post[body]"><%=data.body%></textarea>
-          <button type="submit">Submit</button>
-        </form>
-          <a href="/posts/<%=data._id%>"><button>Back</button>
+      <table class="style">
+        <thead>
+          <tr>
+            <th>Edit Post</th>
+            <th>insert...</th>
+          </tr>
+        </thead>
+        <tbody>
+          <form class="posts_form" action="/posts/<%=data._id%>?_method=put" method="post">
+          <tr>
+            <th>TITLE</th>
+            <td><input type="text" name="post[title]" value="<%=data.title%>"></td>
+          </tr>
+          <tr>
+            <th>DATA</th>
+            <td><textarea name="post[body]"><%=data.body%></textarea></td>
+          </tr>
+          <tr>
+            <td><button type="submit">Submit</button></td>
+          </form>
+            <td><a href="/posts/<%=data._id%>"><button>Back</button></td>
+          </tr>
+        </tbody>
+      </table>
       </div>
       <!-- main end -->
     </div> <!-- posts end -->
     <footer>
       <% include ../partials/footer %>
     </footer>
+  </div>
   </body>
 </html>

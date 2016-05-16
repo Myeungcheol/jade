@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="/stylesheets/table.css">
+    <link rel="stylesheet" href="/stylesheets/body.css">
     <% include ../partials/head %>
   </head>
   <body>
+    <div align="center">
     <header>
       <% include ../partials/header %>
     </header>
@@ -11,20 +14,39 @@
       <% include partials/top%>
       <!-- main start -->
       <div class="new">
-        <h3>New Post</h3>
-        <form class="posts_form" action="/posts" method="post">
-          <label>Title</label>
-          <input type="text" name="post[title]" value="">
-          <labe>Body</label>
-          <textarea name="post[body]"></textarea>
-          <button type="submit">Submit</button>
-        </form>
-        <a href="/posts"><button>Back</button><a>
+        <table class="style">
+          <thead>
+            <tr>
+              <th>New Post</th>
+              <th>Insert ...</th>
+            </tr>
+          </thead>
+          <tbody>
+            <form class="posts_form" action="/posts" method="post">
+            <tr>
+              <th>TITLE</th>
+              <td><input type="text" name="post[title]" value=""></td>
+            </tr>
+           <tr>
+             <th>Body</th>
+             <td><input type="text" name="post[body]" value=""></td>
+           </tr>
+           <tr>
+             <td><button type="submit">Submit</button></td>
+             </form>
+             <td align="right">
+               <a href="/posts"><button>Back</button></a>
+             </td>
+           </tr>
+         </tbody>
+       </table>
       </div>
       <!-- main end -->
     </div> <!-- posts end -->
+
     <footer>
       <% include ../partials/footer %>
     </footer>
+    </div>
   </body>
 </html>

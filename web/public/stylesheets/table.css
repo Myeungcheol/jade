@@ -21,7 +21,37 @@ table.style tbody th {
     background: #f3f6f7;
 }
 table.style td {
-    width: 350px;
+    width: 150px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+table.style2 {
+    border-collapse: collapse;
+    text-align: center;;
+    line-height: 1.5;
+    margin: auto;
+
+}
+
+table.style2 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+}
+table.style2 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #f3f6f7;
+}
+table.style2 td {
+    width: 150px;
     padding: 10px;
     vertical-align: top;
     border-bottom: 1px solid #ccc;

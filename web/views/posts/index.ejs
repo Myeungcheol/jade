@@ -7,12 +7,15 @@
     <!-- <link rel="stylesheet" href="/stylesheets/toggle2.css"> -->
   </head>
   <body>
+    <div align="center">
     <header>
       <% include ../partials/header %>
     </header>
-    <div class="center">
+
     <div class="posts">
+      <div align="center">
       <% include partials/top%>
+    </div>
       <!-- main start -->
         <!-- views/posts/index.ejs -->
         <div class="index">
@@ -35,8 +38,8 @@
             <% }) %>
             <!-- new button -->
             <tr>
-              <th>
-              </th>
+              <td>
+              </td>
               <td align="right">
                 <a href="/posts/setting"><button>Setting</button></a>
                 <a href="/posts/new"><button>New</button></a>
