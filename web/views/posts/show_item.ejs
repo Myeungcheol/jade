@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" />
     <% include ../partials/head %>
   </head>
   <body>
@@ -13,6 +15,9 @@
       <% include partials/top%>
       <!-- main start -->
       <div class="show">
+        <video width="360" height="240" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
+          <source src="<%=data.path%>" type="video/mp4" />
+        </video>
         <table class="style">
             <tbody>
               <tr>
