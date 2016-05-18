@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/table.css">
+    <% include ../partials/head %>
+  </head>
+
+  <body>
+  <div align="center">
+      <header>
+        <% include ../partials/header %>
+      </header>
+
+    <div class="users">
+      <div class="show">
+        <h3>User Info</h3>
+
+        <div class="content">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th> Name </th>
+                <td> <p class="user_info"><%=user.name%></p> </td>
+              </tr>
+              <tr>
+                <th> Password </th>
+                <td> <p class="user_info"> <%=user.password%> </p> </td>
+              </tr>
+              <tr>
+                <th> </th>
+                <td align="right">  <a href="/users/<%=user._id%>/edit"><button>Edit</button></a> </td>
+              </tr>
+              <tr>
+                <th> </th>
+                <td align="right"> <a href="javascript:history.back()""><button>Back</button></a> </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer>
+    <% include ../partials/footer %>
+  </footer>
+  </div>
+</html>

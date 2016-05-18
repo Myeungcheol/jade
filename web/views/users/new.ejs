@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <% include ../partials/head %>
+    <link rel="stylesheet" href="/stylesheets/table.css">
+    <link rel="stylesheet" href="/stylesheets/body.css">
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div align="center">
+      <header>
+        <% include ../partials/header %>
+      </header>
+
+      <div class="users">
+        <div class="new">
+          <h3>Sign Up</h3>
+            <form id="create_user" class="users_form" action="/users" method="post">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th> <label>Name* <span id="name_error" class="error_message"><%= nameError?nameError:""%></span></label> </th>
+                    <td> <input type="text" id="name" name="user[name]" value="<%formData?formData.name:""%>"> </td>
+                  </tr>
+                  <tr>
+                    <th> <label>Password* <span id="password_error" class="error_message"><%=passwordError?passwordError:""%></span> </th>
+                    <td> <input type="text" id="password" name="user[password]" value=""> </td>
+                  </tr>
+                  <tr>
+                    <th> <label>Password Confirmation* <span id="password_confirmation_error" class="error_message"></span></label> </th>
+                    <td> <input type="text" id="password_confirmation" name="user[passwordConfirmation]" value=""> </td>
+                  </tr>
+                  <tr>
+                    <th>  <p><small>*Require</small></p> </th>
+                    <td align="right"> <input type="submit" class="submit_btn" value="submit"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+        </div>
+
+        <table class="table">
+          <tr>
+            <th> </th>
+            <td align="right"> <a href="/"><button>Back</button></a> </td>
+          </tr>
+        </table>
+    </body>
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
+  </div>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <% include ../partials/head %>
+    <link rel="stylesheet" href="/stylesheets/table.css">
+    <link rel="stylesheet" href="/stylesheets/body.css">
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div align="center">
+    <header>
+      <table border="0" background="/images/title.png">
+        <tr>
+          <td>
+            <h1>&nbsp;Smart - Guardian&nbsp;</h1>
+          </td>
+        </tr>
+      </table>
+      <HR width="100%" align="left" style="color:red; background-color:red; height:1px; border:none" />
+    </header>
+    <div class="login">
+        <h3>Login</h3>
+        <form class="login_form" action="/login" method="post">
+          <table class="table">
+            <tbody>
+            <tr>
+              <th> ID </th>
+              <td>   <input type="text" name="name" value="<%= name%>"> </td>
+            </tr>
+            <tr>
+              <th> Password </th>
+              <td>  <input type="text" name="password" value=""> </td>
+            </tr>
+            <tr>
+              <th>
+                <% loginError.forEach(function(e){%>
+                  <p class="error_message"><%= e%></p>
+                <%})%>
+              </th>
+              <td align="right"> <button class="submit_btn" type="submit">Login</button> </td>
+            </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+
+      <table class="table">
+        <tr>
+          <td align="right">
+               <a href="javascript:history.back()"><button>Back</button></a>
+               <a href="/users/new"><button>Singup</button></a>
+          </td>
+        </tr>
+      </table>
+  </body>
+  <footer>
+    <% include ../partials/footer %>
+  </footer>
+</div> <!-- container end -->
+</html>
