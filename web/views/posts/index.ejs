@@ -18,23 +18,38 @@
 
     <div class="posts">
       <% include partials/top%>
+
         <image src="/images/banner_main.png">
+
+      <div class="index">
+
+        <table class="table">
+        <% if(user) {%>
+          <tr>
+            <td align="center"> <a href="/logout" class="float_right"><button>Logout</a>
+                 <a href="/users/<%= user._id%>" class="float_right"><button>My Profile(<%=user.name%>)</button></a> </th>
+          </tr>
+        <%}else{%>
+          <tr>
+            <td align="center"> <a href="/login" class="float_right"><button>Login</a>
+                 <a href="/users/new" class="float_right"><button>Sign up</a> </th>
+          </tr>
+        <%} %>
+        </table>
+<!--
       <video width="320" height="214" controls="controls" class="video-js vjs-default-skin" data-setup="{}">
         <source src="/videos/sample.mp4" type="video/mp4" />
-      </video>
+      </video> -->
+      <iframe src="http://192.168.1.100:8080/stream_simple.html/" align="center" frameborder="0" width="320" height="250" marginwidth="0" marginheight="0" scrolling="yes">
+      </iframe>
+      <div class="button">
+        <a href="http://192.168.1.100:8080/static_simple.html" ><button> SnapShot </button> </a>
+        <button> Save </button>
+      </div>
       <!-- main start -->
         <!-- views/posts/index.ejs -->
-        <div class="index">
-          <% if(user) {%>
-            <a href="/logout" class="float_right"><button>Logout</a>
-              <a href="/users/<%= user._id%>" class="float_right"><button>My Profile(<%=user.name%>)</button>
-
-          <%}else{%>
-            <a href="/login" class="float_right"><button>Login</a>
-              <a href="/users/new" class="float_right"><button>Sign up</a>
-          <%} %>
-            </div>
           <!-- list table -->
+
           <table class="table">
             <thead>
               <th>TITLE</th>
@@ -60,21 +75,8 @@
                 <a href="/posts/new"><button>New</button></a>
               </td>
             </tr> <!-- new button end -->
-            <!-- toggle test -->
-            <!-- <tr>
-              <th>
-              </th>
-              <td>
-		              <div class="toggle toggle--daynight">
-			                 <input type="checkbox" id="toggle--daynight" class="toggle--checkbox">
-			                 <label class="toggle--btn" for="toggle--daynight"><span class="toggle--feature"></span></label>
-		              </div>
-                </td>
-              </tr> -->
-               <!-- toggle test end -->
             </tbody>
           </table>
-
       <!-- </div> -->
         <!-- main end -->
     </div> <!-- posts end -->
@@ -82,5 +84,6 @@
       <% include ../partials/footer %>
     </footer>
   </div> <!-- container end -->
+  </div>
   </body>
 </html>

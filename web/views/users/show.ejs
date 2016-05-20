@@ -23,8 +23,8 @@
                 <td> <p class="user_info"><%=user.name%></p> </td>
               </tr>
               <tr>
-                <th> Password </th>
-                <td> <p class="user_info"> <%=user.password%> </p> </td>
+                <th> Create At </th>
+                <td> <p class="user_info">  <%= user.createAt.toLocaleDateString() %> </p> </td>
               </tr>
               <tr>
                 <th> </th>

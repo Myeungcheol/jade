@@ -8,17 +8,19 @@ var methodOverride = require('method-override'); // override delete method
 var jquery = require('jquery');
 // var bootstrap = require('bootstrap');
 
-var jsdom = require('jsdom');
+// var jsdom = require('jsdom');
 // var window = jsdom.jsdom().createWindow();
 // var $ = require('jquery')(window);
 
 //video controll
 // var vidStreamer = require("vid-streamer");
 
+//login
 var passport = require('passport');
 var session = require('express-session');
 var flash = require('connect-flash');
 var async = require('async');
+
 
 
 //db connection
@@ -55,6 +57,8 @@ var itemSchema = mongoose.Schema({
   updatedAt: Date
 });
 
+//to hash
+var bcrypt = require("bcrypt-nodejs");
 
   var userSchema = mongoose.Schema({
   name:{type:String, required:true, unique:true},
@@ -62,8 +66,26 @@ var itemSchema = mongoose.Schema({
   createAt:{type:Date, default:Date.now}
 });
 
+//userSchema Append
+userSchema.pre("save", function(next){
+  var user = this;
+  if(!user.isModified("password")){
+    return next();
+  }else{
+    user.password = bcrypt.hashSync(user.password);
+    return next();
+  }
+});
 
+userSchema.methods.authenticate = function(password){
+  var user = this;
+  return bcrypt.compareSync(password, user.password);
+};
 
+userSchema.methods.hash = function(password){
+  return bcrypt.hashSync(password);
+};
+// -point !
 
 //create Model  --> collection name : post // for Schema : postSchema
 var Post = mongoose.model('post', postSchema);
@@ -228,10 +250,9 @@ function(req, name, password, done){
       req.flash("name", req.body.name);
       return done(null,false,req.flash('loginError', 'No user found'));
     }
-    if(user.password != password){
+    if(!user.authenticate(password)){
       req.flash("name",req.body.name);
       return done(null, false, req.flash('loginError','Password does not Match.'));
-
     }
     return done(null,user);
   });
@@ -286,7 +307,7 @@ app.post('/users', checkUserReValidation, function(req,res,next){
 
 //유저의 profile 을 보여주기 위한 route
 //현재는 아이디만 알면 누구의 정보라도 볼수 있게 되어있다
-app.get('/users/:id', function(req,res){
+app.get('/users/:id', isLoggedIn, function(req,res){
   User.findById(req.params.id, function(err,user){
     if(err) return res.json({success:false, message:err});
     res.render("users/show",{user:user});
@@ -294,7 +315,8 @@ app.get('/users/:id', function(req,res){
 });
 
 //유저 정보수정 form을 보여주는 route
-app.get('/users/:id/edit', function(req,res){
+app.get('/users/:id/edit', isLoggedIn, function(req,res){
+  if(req.user._id != req.params.id) return res.json({success:false, message:"unauthhrized Attempt"});
   User.findById(req.params.id, function(err,user){
     if(err) return res.json({success:false, message:err});
   res.render('users/edit',{
@@ -316,12 +338,14 @@ app.get('/users/:id/edit', function(req,res){
 //이러기 위해서는 시작페이지로 req.user를 보내서 view에서 로그인이 되어있는지 아닌지를 알 수 있게 해야 합니다.
 //(req.user는 passport package에서 생성하는 개체로, session이 생성될때(로그인할때) 자동 생성되는 개체라는것 기억하시죠?)
 //게시판의 시작페이지, 즉 index에 user를 전달합니다.
-app.put('/users/:id', checkUserReValidation, function(req,res){
+app.put('/users/:id', isLoggedIn, checkUserReValidation, function(req,res){
+  if(req.user._id != req.params.id) return res.json({success:false, message:"unauthhrized Attempt"});
   User.findById(req.params.id, req.body.user, function(err, user){
     if(err) return res.json({success:"false", message:err});
-    if(req.body.user.password == user.password){
+    if(user.authenticate(req.body.user.password)){
       if(req.body.user.newPassword){
-        req.body.user.password = req.body.user.newPassword;
+        req.body.user.password= user.hash(req.body.user.newPassword);
+        user.save();
       }else{
         delete req.body.user.password;
       }
@@ -336,6 +360,14 @@ app.put('/users/:id', checkUserReValidation, function(req,res){
     }
   });
 });
+
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/');
+}
+
 
 app.get('/posts', function(req, res){
   Post.find({}).sort('-createAt').exec(function(err,posts){
